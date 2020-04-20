@@ -1,3 +1,4 @@
+import javax.servlet.ServletConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,13 +9,20 @@ import java.io.PrintWriter;
 @WebServlet(name = "CountServlet", urlPatterns = "/count")
 public class CountServlet extends HttpServlet {
 
-    public static int count = 0;
+    public static int count;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         res.setContentType("text/html");
+        String reset = req.getParameter("reset");
         PrintWriter out = res.getWriter();
-        count++;
+
+        if(reset != null && reset.equalsIgnoreCase("true")) {
+            count = 1;
+        } else {
+            count++;
+        }
+
         out.println("<h1>You are visitor number: " + count + "</h1>");
     }
 }
