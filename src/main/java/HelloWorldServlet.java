@@ -8,10 +8,18 @@ import java.io.PrintWriter;
 @WebServlet(name = "HelloWorldServlet", urlPatterns = "/hello")
 public class HelloWorldServlet extends HttpServlet {
 
+    static int counter = 0;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         res.setContentType("text/html");
         PrintWriter out = res.getWriter();
-        out.print("<h1>Hello, World!</h1>");
+        String name = req.getParameter("name");
+
+        if (name != null) {
+            out.println("<h1>Hello, " + name + "!</h1>");
+        } else {
+            out.println("<h1>Hello, World!</h1>");
+        }
     }
 }
